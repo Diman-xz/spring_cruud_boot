@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Admin</title>
+    <style type="text/css">
+        .tg {
+            border-collapse: collapse;
+            border-spacing: 0;
+            border-color: #ccc;
+        }
+
+        .tg td {
+            front-familly: Arial, sans-serif;
+            front-size: 14px;
+            padding: 10px 5px;
+            border-style: solid;
+            border-width: 1px;
+            overflow: hidden;
+            word-break: normal;
+            border-color: #ccc;
+            color: #333;
+            background-color: #fff;
+        }
+
+        .tg th {
+            front-familly: Arial, sans-serif;
+            front-size: 14px;
+            padding: 10px 5px;
+            border-style: solid;
+            border-width: 1px;
+            overflow: hidden;
+            word-break: normal;
+            border-color: #ccc;
+            color: #333;
+            background-color: #f0f0f0;
+        }
+
+        .tg .tg-4eph {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+<div th:align="center" class="tg">
+    <h1>Admin</h1>
+    <br/>
+    <h2>Users contains</h2>
+    <br/>
+    <h3><a href="/admin/newUser">Add new User</a></h3>
+    <br/>
+    <table border="1" cellpadding="5">
+        <tr>
+            <th>id</th>
+            <th>name</th>
+            <th>surName</th>
+            <th>phoneNumber</th>
+            <th>email</th>
+            <th>edit</th>
+            <th>delete</th>
+        </tr>
+        <tr th:each="user : ${allUsers}">
+            <td th:text="${user.id}">id</td>
+            <td th:text="${user.username}">name</td>
+            <td th:text="${user.surName}">surName</td>
+            <td th:text="${user.phoneNumber}">phoneNumber</td>
+            <td th:text="${user.email}">email</td>
+            <td><form th:method="GET" th:action="@{/admin/editUser/{id}(id=${user.id})}">
+                <input type="submit" class="b2" value="edit">
+            </form></td>
+            <td><form th:method="DELETE" th:action="@{/admin/remove/{id}(id=${user.id})}">
+                <input type="submit" value="delete">
+            </form></td>
+        </tr>
+        <br/>
+        <a th:href="@{/logout}">logout</a>
+    </table>
+</div>
+</body>
+</html>
