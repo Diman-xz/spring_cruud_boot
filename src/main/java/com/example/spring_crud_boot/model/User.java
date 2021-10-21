@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -36,12 +37,9 @@ public class User implements UserDetails {
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "usersContains_id"),
-            inverseJoinColumns = @JoinColumn(name = "roles_id"))
     private Set<Role> roles;
 
-    public User(Long id, String username, String surName, String phoneNumber, String email, String password, Set<Role> roles) {
-        this.id = id;
+    public User(String username, String surName, String phoneNumber, String email, String password, Set<Role> roles) {
         this.username = username;
         this.surName = surName;
         this.phoneNumber = phoneNumber;
