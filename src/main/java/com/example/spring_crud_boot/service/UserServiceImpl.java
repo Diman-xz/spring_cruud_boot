@@ -7,6 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -38,6 +39,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void edit(User user) {
+        if (!Objects.equals(getById(user.getId()).getPassword(), user.getPassword())){
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            userRepository.save(user);
+        }
         userRepository.save(user);
     }
 
@@ -50,5 +55,4 @@ public class UserServiceImpl implements UserService {
     public User getUserByUsername(String username) {
         return userRepository.getUserByUsername(username);
     }
-
 }
